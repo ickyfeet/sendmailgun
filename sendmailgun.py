@@ -1,11 +1,8 @@
-#!/usr/bin/python3
-
 import requests
-import csv
 
-baseurl = 'https://api.mailgun.net/v2/mailgun.example.com/messages'
+baseurl = 'https://api.mailgun.net/v3/mailgun.example.com/messages'
 
-auth = ('api', 'YOUR MAILGUN API KEY')
+emailauth = ('api', 'YOUR MAILGUN API KEY')
 
 emailfrom = 'John Smith <johnsmith@example.com>'
 
@@ -18,12 +15,11 @@ YOUR TEXT
 with open('file.txt') as f:
     for line in f:
 
-    
-    data = {
-        'from': emailfrom,
-        'to': line,
-        'subject': emailsubject,
-        'text': emailtext
-        }
+        emaildata = {
+            'from': emailfrom,
+            'to': line.rstrip(),
+            'subject': emailsubject,
+            'text': emailtext
+            }
 
-    print(data)
+        requests.post(baseurl, data=emaildata, auth=emailauth)
